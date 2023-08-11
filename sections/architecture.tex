@@ -1,9 +1,108 @@
 \section{Architecture of the new system}
+  In this section I will discuss the proposed architecture for the system, justifying why I think it is the best pattern for ACME and compare it against 
+  some alternatives. System architecture is described by Ian Sommerville as:
+  \begin{quote}
+    \textit{'Software architecture is the fundamental organization of a system embodied in its
+    components, their relationships to each other and to the environment, and the principles
+    guiding its design and evolution.'} [1]
+  \end{quote}
+
+  For this reason I will not only propose the architectural design pattern to use, however come up with a diagrams to show how the system could be integrated.
+  In addition to this I will also discuss programming languages and how they relate to design decisions made.
 
   \subsection{Overall Architecture}
-  Cloud native
+  The architecture I decided to choose for ACME was a Cloud-Native architecture. AWS, the largest cloud provider [2], describes this architecture as the 
+  \textit{'approach of building, deploying, and managing modern applications in cloud computing environments'} [3]. In simpler terms, developers can setup
+  \textit{'virtual'} servers that a third party houses to run their software, they provide the infrastructure, you provide the code/instructions. These servers
+  use virtualisation \textit{'allows the hardware elements of a single computer ... to be divided into multiple virtual computers'} [4]. The image below 
+  illustrates how this works, how this works is out of the scope for this report.
 
-  \subsection{Sub Architectures}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=8cm]{assets/virtualisation.png}
+    \caption{Diagram illustrating how virtualisation works [5].}
+    \label{fig:virtualisation}
+  \end{figure}
+
+  \subsection{Justification for a cloud-native approach}
+  ACMEs' plan is an ambitious one, going from a paper-based system to a fully digitised solution that incorporates cryptocurrency are polar opposites! One of 
+  the big factors is ACME's lack of starting infrastructure. In order to purchase the servers, database software and account management software alone would
+  cost a lot of money. This financial burden is somewhat lessened by using a cloud-native approach as you pay for what you use and companies such as AWS offer
+  a free tier [6].
+  
+  This type of architecture also enables the use of the sub-architectures like microservices which describe a \textit{'single application [that] is 
+  composed of many loosely coupled and independently deployable smaller components' [7]}.
+
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=8cm]{assets/microservices.drawio.png}
+    \caption{Simple diagram illustrating how a system can use microservices.}
+    \label{fig:microservices}
+  \end{figure}
+
+  Microservices are extremely helpful to stop full system outages. Looking at the above figure can help to demonstrate this. If the payment system went
+  suffered a failure, the account system would still be accessible, meaning that some functionality still persisted. If both of these systems were bundled
+  together, the system would have no functionality available and would then result in downtime. A quote from Benjamin Franklin illustrates the damage the 
+  above can cause to a company:
+
+  \begin{quote}
+    \textit{'It takes many good deeds to build a good reputation, and only one bad one to lose it.'}
+  \end{quote}
+
+  Customers will go to competitors if they deem your service to be unreliable or cannot access you're system. This is another area where cloud-native shines 
+  as they provide redundancy. AWS calls these AZs (Availability Zones) [8] in simple terms they represent different data centers. So if one data center 
+  has an issue, your entire infrastructure can be \textit{'ported'} to another one. Coupled with this is the fact the services offered by these cloud
+  providers have been tested by millions of people, so are resilient, but also the cost to develop some of these solutions from scratch could be
+  extremely costly.
+
+  Using cloud-native providers also alleviates some of the responsibility. Google [9], AWS [10] and Azure [11] all have shared responsibility models where 
+  they determine who is in charge of what. This gives a team less to worry about, as with certain packages operating systems, networking and even 
+  security patches can all be handled and managed by the cloud provider, dependant on what kind of service you are using.
+
+  Finally a cloud-native approach is much more scalable and resilient. There are two ways to scale, vertically and horizontally.
+  Vertically refers to adding more computing power, horizontally refers to adding extra machines [12].
+
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=8cm]{assets/scalingOptions.jpg}
+    \caption{Diagram illustrating the different ways to scale infrastructure. [13]}
+    \label{fig:scalingOptions}
+  \end{figure}
+
+  In an on-prem situation, scaling is expensive in both ways, buying a whole new server is not feasible for ACME, never mind the management of how
+  redundancy takes place. But upgrading the hardware would also not be too cheap either. Cloud providers work at such a large scale that they can offer
+  these features at a fraction of the cost that on-prem can. In addition there are options provided by the cloud firms to have fallbacks for failures and 
+  load balancing for quicker response times. These are features that are costly to develop and maintain on ones own. 
+
+  \subsection{Drawbacks of a cloud-native approach}
+  Although there is a lot of positives to cloud-native, there is never a perfect solution. Here is a list of things to consider when adopting a cloud-native
+  approach.
+
+  \begin{itemize}
+    \item \textbf{External dependency} - Adding another external dependency to a business is another thing that can go wrong. This year the BBC, Boots and
+    others were caught up in an attack that revealed sensitive information about staff [14]. This was done by an attack using an external provider to gain 
+    access to the companies using it. Although this is very unlikely, and even with full-control hacks could happen, it's something to consider.
+    \item \textbf{Lock in} - Once you've picked a cloud provider to go with, the more infrastructure you build the harder it is to move away. With 
+    IaC (Infrastructure as Code) [15] being used in a lot of organisations, it's not just a service switch, it can be an entire rewrite of 1000s of lines
+    of code. Research is vital here, making sure the organisation you go with has the things you need and is expanding is vital to not reach a situation where
+    you can't build what you want. 
+    \item \textbf{Lack of control} - You can't control what stays and what gos on the providers platform. They could deprecate systems you were using leaving 
+    you with a lot of issues. This has happened in the past with certain version of software, for example node versions being deprecated [16]. The main
+    reason this happens however is because the software is no longer supported by the developers. This could lead to security issues in the future and it is 
+    therefore unsafe to use it. In addition to this, features are usually \textit{soft deprecated} which refer to \textit{'an API which should no longer be 
+    used to write new code, but it remains safe to continue using it in existing code'} [17].
+    \item \textbf{Knowledge} - Cloud development and IAC [15] requires knowledge of how they work and piece together. ACME can put their developers who create
+    the site on courses to learn this or hire a specialist who knows all about it already. Either this is an additional cost/factor to think about. I 
+    don't see this is an issue though, as with the on-prem alternative you also need someone to manage the physical hardware as well as the software 
+    running on it.
+  \end{itemize}
+
+  Despite the above I still feel cloud-native is the best approach. With the size of companies like AWS, Azure and Google it's unlikely they'll disappear
+  overnight. Lock in and hacks are both concerns, however as was previously stated even with on-prem services you can end up getting hacked, and changing
+  certain aspects of the infrastructure can still cause issues. These potentialities don't make up for the realities; speed of development, fallbacks, 
+  lower cost and array of services that the cloud can offer. 
+
+  \subsection{Cloud-native solution using AWS}
   This solution will be built primarily using a cloud-native approach, however as this system is somewhat large there is room for other 
   architectural patterns to be used in sub systems of the overall build. Below follow diagrams of both the proposed systems, including third party 
   integrations showing metamask and Stripe, and a diagram showing the overlap of these different design patterns.
@@ -20,7 +119,8 @@
     \includegraphics[width=12cm]{assets/architectureSectionedEvents.drawio.png}
     \caption{Diagram showing the proposed architecture with the different types of architecture labelled.}
     \label{fig:architectureSectioned}
-  \end{figure}  
+  \end{figure}
+
 
   \begin{itemize}
     \item \textbf{Cloud-Native} - 
