@@ -104,15 +104,25 @@
 
   \subsection{Cloud-native solution using AWS}
   This solution will be built primarily using a cloud-native approach, however as this system is somewhat large there is room for other 
-  architectural patterns to be used in sub systems of the overall build. Below follow diagrams of both the proposed systems, including third party 
-  integrations showing metamask and Stripe, and a diagram showing the overlap of these different design patterns.
+  architectural patterns to be used in sub systems of the overall build. Below is a high level look at how the system could be create using AWS:
 
   \begin{figure}[H]
     \centering
     \includegraphics[width=12cm]{assets/architectureEvents.drawio.png}
     \caption{Diagram showing the proposed architecture for the whole system.}
     \label{fig:architecture}
-  \end{figure}  
+  \end{figure}
+
+  The main component is the Server Side Rendered front end. This can then communicate with the blockchain for crypto transactions using a wallet provider,
+  e.g. Metamask [18]. The main functionality is that the front end is then able to send events through EventBridge [19] to individual lambdas [20] for different 
+  functionality. These lambdas can then store data into the database. The payment lambda uses Stripe [21] to process payments, and the \textit{'car lambda'} is
+  for internal use only, hence the lock on its connection. These topics will be discussed more in the 
+  \hyperref[sec:Dependability]{\textbf{Dependability}} section.
+
+  \newpage
+  \subsubsection{Sub architectures in a cloud-native approach}
+  As previously mentioned, using a cloud-native approach allows access to multiple services. These services have different architectures that we can take
+  advantage of for individual parts/components of the system. Below breaks down the previous architecture in to these separate architectures.
 
   \begin{figure}[H]
     \centering
@@ -121,12 +131,57 @@
     \label{fig:architectureSectioned}
   \end{figure}
 
-
   \begin{itemize}
-    \item \textbf{Cloud-Native} - 
-    \item \textbf{Event-Based} - 
-    \item \textbf{Microservices} - 
-    \item \textbf{Peer-2-Peer} - 
+    \item \textbf{Cloud-Native} - Cloud-native is the main architecture and \textit{'wraps'} around all the other architectures for the project. The benefits
+    of this architecture have been discussed through this report.
+
+    \item \textbf{Microservices} - Microservices have been mentioned in this report already, however the design illustrates how helpful they can be. The 4 
+    lambdas in the design work independently of each other. If there's an issue with the payment lambda, users can still access the functionality provided by 
+    the account lambda. Breaking the structure down this way also makes code more maintainable, as you can have separate repos for each component. A study 
+    in 2017 [22] that compared 3 different deployment options, monolithic, microservices and lambda. In this study the microservices architecture still used
+    EC2s/servers but instead had multiple smaller ones doing tasks, ACMEs' new design is more reminiscent of the \textit{'lambda'} implementation, which used
+    different AWS services to achieve its goal. As can be seen in the below, the suggested architecture can not only be cheaper using the microservice/lambda 
+    approach, but can actually result in quicker response times for the consumer.
+    
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=8cm]{assets/costComparison.png}
+      \includegraphics[width=8cm]{assets/responseTimeComparison.png}
+      \caption{Charts showing results for the 3 solutions [22].}
+      \label{fig:costComparison}
+    \end{figure}
+
+    Microservices aren't always the way to go, in fact Amazon themselves swapped away from this architecture for their live audio/video monitoring service [23].
+    This makes sens as serverless/microservices are not made for continuous running. The microservices in ACMEs design would only run when they received events
+    to do so.
+
+    \item \textbf{Event-Based} - In the above design AWS EventBridge [19] is used to fire events to the individual lambdas. A benefit of this is the 
+    responsiveness of the system. The client side has 0 wait time, as the event is fired off to the EventBridge which then routes the message to the correct 
+    processor. Website performance is key to customer retention, one of ACMEs' business goals. An article by The Drum states that \textit{'79\% of people 
+    wouldn't return to a site that had previously performed poorly for them' [24]}. Another article quotes:
+    \begin{quote}
+      \textit{'Previous research has shown that user frustration increases when page load times exceed eight to 10 seconds, without feedback' [25]}
+    \end{quote}
+    This event-driven approach minimises this load time. The EventBridge and its rules also filters out any bad traffic/events people try to send to it
+    resulting in only valid event being processed.
+
+    Some issues with event-based systems is error handling, which I will cover later in the report, and duplicated events. The system would have to have 
+    some code built in to it to stop people creating multiple orders instead of just the 1. Techniques like debouncing (\textit {'a function ensures that 
+    it doesn't get called too frequently.'} [26]) can be used to stop this. 
+
+    \item \textbf{Peer-2-Peer} - Finally my system is exposed to the P2P architecture due to the nature of cryptocurrency. Peer to peer can be described as:
+    \begin{quote}
+      \textit{'a decentralized platform whereby two individuals interact directly with each other, without intermediation 
+      by a third party.'} [27]
+    \end{quote}
+
+    So if a user was to pay with cryptocurrency, there is no Stripe or bank in between ACME and their finances, ACME hs full control over that transaction.
+    Smart contracts [28] can be used to automate and validate payments made, however this requires knowledge of the Solidity [29] programming language, which 
+    is the language used to write smart contracts. In my previous report I spoke about how quickly cryptocurrency adoption is growing. But there are other 
+    benefits to using the P2P architecture. As previously stated, the automation smart contracts allow, as well as no middle-men make the process smooth.
+    Security of these contracts is paramount, so audits of this code should be carried out. Tools such as Chat GPT have been tested to audit 
+    smart contracts, with mixed results [30][31].
+
   \end{itemize}
 
 \newpage
