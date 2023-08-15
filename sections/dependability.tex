@@ -42,21 +42,85 @@
   handle issues in that area.
 
   \begin{enumerate}
-    \item \textit{Limit the visibility of information in a programme} -
-    \item \textit{Check all inputs for validity} -
-    \item \textit{Provide a handler for all exceptions} -
-    \item \textit{Minimise the use of error-prone constructs} -
-    \item \textit{Provide restart capabilities} -
-    \item \textit{Check array bounds} -
-    \item \textit{Include timeouts when calling external components} -
-    \item \textit{Name all constants that represent real-world values} -
+    \item \textit{Limit the visibility of information in a programme} - This can be linked to the Principle of Least Privilege (PoLP) idea which 
+    \textit{'refers to an information security concept in which a user is given the minimum levels of access' [36]}. Users, both internal and external, 
+    should only have access to what they need to access to do their jobs. 
+
+    However this can also be extended in a cloud-native architecture so that the individual components of the system only need permission to access what 
+    they need to function. For example The payment lambda does not need access to the account lambda. This not only break PoLP, but also the whole idea of
+    microservices being self contained operations.
+
+    \item \textit{Check all inputs for validity} - This is vital for two reasons. The first is data integrity, you may have a schema that you want users
+    data to conform to. This can make querying data easier, but also save money as you won't be having to pay for extra data storage. Additional checks such 
+    as size and range checks [32] should be done, and helpful error messages returned to the client so they know what to change.
+    
+    However the main reason is security. In the OWASP top 10 vulnerabilities list [37] \textit{'Injection'} is 3rd and covers both XSS (Cross Site Scripting) 
+    and SQL injection attacks. These are nearly always exploited via uncheck/unsanitised inputs. Both client and server side checks must be made on any data
+    provided by the user. 
+
+    \item \textit{Provide a handler for all exceptions} - This is achieved by try/catch/finally statements, or the alternative in other languages. If an 
+    error occurs but is not caught, then the system could fail. In addition to this catching the error also provides an opportunity for monitoring and 
+    finding potential defects in the system. Below shows the code difference between a correctly handled error and not.
+
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=5cm]{assets/noExceptionHandling.png}
+      \includegraphics[width=5cm]{assets/exeptionHandling.png}
+      \caption{Code demonstrating error handling (right) and no error handling (left) using Python.}
+      \label{fig:errorHandling}
+    \end{figure}
+
+    \item \textit{Minimise the use of error-prone constructs} - A list of these constructs was compiled by Ian Somerville [38], however a lot of these
+    are outdated, and refer to languages like C where memory allocation, array bound checking and pointers all posed issues for the developer when used
+    incorrectly. However there are more modern bad coding practices that should be adhered to. One of these principles is DRY code [39], which refers to 
+    clear concise code and Don't Repeat Yourself. Other issues are poor documentation. If everyone left the team then the new employees need this 
+    documentation to fully understand how the system works.
+
+    \item \textit{Provide restart capabilities} - This will be covered towards the end of this section, however making sure on system failure there
+    is a procedure for critical components is vital.
+    \item \textit{Check array bounds} - This is not as relevant as it would be when using an non-memory-safe language, however can still cause errors.
+    There is no longer a potential memory leak, however errors can still occur when accessing out of bound ranges. Some languages like JavaScript allow
+    this access and return a default value instead of erroring. However this still has to checked handlers are used to catch these errors and continue
+    execution without system errors or failures occurring.
+
+    \item \textit{Include timeouts when calling external components} - This is important as a faulty or even compromised external service could make
+    your own service unavailable when trying to retrieve data from it. If one user initiated a request to the external resource that took too long 
+    another user coming along in that time may not be able to access the service. In addition to this it's frustrating to the user to be sat 
+    around waiting when the data may never be returned. Most libraries allow developers to add timeouts to any network request made and this is 
+    implemented into the ACME system.
+
+    \item \textit{Name all constants that represent real-world values} - This is a good practice and is sometime reffered to as \textit{'magic numbers'} [40].
+    This can be troublesome when these hard-coded values are used in multiple places. Using config files for these values that can then be imported 
+    throughout the project. This means if the value has to be changed, it can be changed in one place, making it much more maintainable and configurable
+    in the future. It also makes code more readable instead of having seemingly random values throughout the code.
+
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=5cm]{assets/magicNumbers.png}
+      \includegraphics[width=5cm]{assets/noMagicNumbers.png}
+      \caption{Code demonstrating magic numbers (left) and without (right) using Python.}
+      \label{fig:magicNumbers}
+    \end{figure}
+
   \end{enumerate}
 
-  **** Talk about alarms, auto rollbacks if threshold is reached, monitoring etc. **** 
+  AWS uses metrics to track events, these can be both default and custom metrics defined in code. These metrics can then be hooked up to alarms which 
+  when state changes can trigger events that are handled by the EventBridge currently in the architecture [TODO]. These events can then be used to trigger
+  additional actions such as code rollbacks or additional checks to determine the issue.
+
+  Rollbacks could be made possible by using Jenkins [TODO], which is a CI/CD provider that allows versioned deployment at the click of a button. This kind 
+  of action should only be taken on components that render the service unusable though. This automation of rolling back could have other consequences to 
+  other systems and therefore should be a last resort and very well tested. For example if a microservice failed, it might not be worth having this automatic
+  process. However if the web front end encountered system failure it'd be worth auto restarting, especially when there is no staff currently working to 
+  investigate the problems themselves.
+  
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=10cm]{assets/rollbackPipeline.drawio.png}
+    \caption{Diagram showing how the CI/CD pipeline of a rollback system would operate.}
+    \label{fig:rollbackPipeline}
+  \end{figure}
   
   \subsection{Safety and security threats}
-
-  \subsection{Resilience}
-  Might not need to do this...
 
 \newpage
