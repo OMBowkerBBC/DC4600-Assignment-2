@@ -105,10 +105,10 @@
   \end{enumerate}
 
   AWS uses metrics to track events, these can be both default and custom metrics defined in code. These metrics can then be hooked up to alarms which 
-  when state changes can trigger events that are handled by the EventBridge currently in the architecture [TODO]. These events can then be used to trigger
+  when state changes can trigger events that are handled by the EventBridge currently in the architecture [41]. These events can then be used to trigger
   additional actions such as code rollbacks or additional checks to determine the issue.
 
-  Rollbacks could be made possible by using Jenkins [TODO], which is a CI/CD provider that allows versioned deployment at the click of a button. This kind 
+  Rollbacks could be made possible by using Jenkins [42], which is a CI/CD provider that allows versioned deployment at the click of a button. This kind 
   of action should only be taken on components that render the service unusable though. This automation of rolling back could have other consequences to 
   other systems and therefore should be a last resort and very well tested. For example if a microservice failed, it might not be worth having this automatic
   process. However if the web front end encountered system failure it'd be worth auto restarting, especially when there is no staff currently working to 
@@ -122,5 +122,29 @@
   \end{figure}
   
   \subsection{Safety and security threats}
+
+  Safety and security are not the same things when it comes to software, a definition for safety is a:
+  \begin{quote}
+    \textit{'should never damage people or environment even though the system fails'} [43]
+  \end{quote}
+
+  Where as security can described as:
+  \begin{quote}
+    \textit{'a system attribute that reflects the ability of the system to protect itself from external attacks, which may be accidental or deliberate.'} [43]
+  \end{quote}
+
+  Despite this there are situations in which these two can cross over fully. A german hospital was hacked and a woman ended up dying due the hack forcing her 
+  to be transported to another hospital. This was deemed \textit{'the first known case of a life being lost as a result of a hack'} [44].
+  In the rest of this section I will discuss how ACMEs' system protects/avoids the two above issues.
+
+  \subsubsection{Safety}
+  Safety of a system can often times be linked to harming other peoples health. The system ACME has created can't directly do that, however could have 
+  indirect consequences. One issue is financial, a bug in the system could do severe harm to someone financially. There is also a chance cars provided 
+  are faulty or the person driving them has provided fake ID in order to gain access to the vehicle, then going and causing people harm by not knowing 
+  how to drive correctly.
+  Lets starts by discussing financial issues, I previously talked about debouncing being a way to stop users accidentally performing an actin more than
+  once. But there are other ways to stop this financial damage.
+
+  \subsubsection{Security}
 
 \newpage
