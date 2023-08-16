@@ -142,9 +142,44 @@
   indirect consequences. One issue is financial, a bug in the system could do severe harm to someone financially. There is also a chance cars provided 
   are faulty or the person driving them has provided fake ID in order to gain access to the vehicle, then going and causing people harm by not knowing 
   how to drive correctly.
-  Lets starts by discussing financial issues, I previously talked about debouncing being a way to stop users accidentally performing an actin more than
-  once. But there are other ways to stop this financial damage.
+
+  Lets starts by discussing financial issues, I previously talked about debouncing being a way to stop users accidentally performing an action more than
+  once. But there are other ways to stop this financial damage. Simple things like making sure a user has to confirm there purchase after the initial 
+  action can stop accidental purchases. However issues may occur despite these safeguards, because of this ACME offers a support email that is regularly
+  monitored to help customers who have problems. This will hopefully stop any harm coming to customers as their funds should be returned promptly.
+
+  To verify drivers are who they say they are ACME has multiple checks keys are given to a customer. The UK government offers a service to check 
+  the validity of individuals driving licenses [45], which will be used when the customer creates an account to rent a vehicle with. However to 
+  add further security to this, drivers licenses must be checked when the customer comes into the lot to pick the car up. If something isn't correct,
+  the customer is refunded and the car is not rented to them.
+
+  Doing the above will help with safety concerns that could arise from ACME's system. There is always a chance something will happen that is out of 
+  ACMEs' control, however if the correct steps are taken these occurrences can be minimised.
 
   \subsubsection{Security}
+  Security is always an issue in software. I will discuss this in two categories, physical (real-world) security and software security.
+
+  \textbf{Physical}
+  \vspace{0.2cm}
+  Some threats of physical security are reduced due to the cloud-native approach chosen. This is due to no on-prem servers being used, therefore 
+  user data is not accessible via physically plugging into the server. However there are still some threats worth discussing.
+
+  \begin{itemize}
+    \item \textit{Tailgating} - 
+    \item \textit{Physical access to machines} -
+    \item \textit{Social engineering} -
+    \item \textit{Access control} - 
+  \end{itemize}
+
+  The above can be handled by training staff to see identify bad actors quickly as well as how to prevent this from ever happening. This includes locking 
+  machines when not near them, as well as having a strong password policy. Forcing users to change their passwords every 3 months, and making sure that the 
+  password chosen is strong. This could be done through password managers, however I personally feel like this is a single point of failure that is not
+  worth using. If that password is cracked, all the account are compromised. Just last year LastPass was hacked affecting 25 million users [TODO]. Other
+  tools like haveibeenpwned [TODO] can be used to check if your emails have been in a recent breach. Passwords should be lenghthy and contain character
+  variations.
+
+  \textbf{Software}
+  \vspace{0.2cm}
+
 
 \newpage
