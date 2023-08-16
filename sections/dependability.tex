@@ -165,18 +165,23 @@
   user data is not accessible via physically plugging into the server. However there are still some threats worth discussing.
 
   \begin{itemize}
-    \item \textit{Tailgating} - 
-    \item \textit{Physical access to machines} -
-    \item \textit{Social engineering} -
-    \item \textit{Access control} - 
-  \end{itemize}
+    \item \textit{Tailgating} - This is a method where an \textit{'unauthorized person gains physical access to an off-limits location'} [46]. This can 
+    lead this individual gaining access to machines or information they shouldn't have access to. Staff training is required here as well as tight security
+    policies around passes. Gates should only allow one person through at a time and staff should report any suspicious behaviour.
 
-  The above can be handled by training staff to see identify bad actors quickly as well as how to prevent this from ever happening. This includes locking 
-  machines when not near them, as well as having a strong password policy. Forcing users to change their passwords every 3 months, and making sure that the 
-  password chosen is strong. This could be done through password managers, however I personally feel like this is a single point of failure that is not
-  worth using. If that password is cracked, all the account are compromised. Just last year LastPass was hacked affecting 25 million users [TODO]. Other
-  tools like haveibeenpwned [TODO] can be used to check if your emails have been in a recent breach. Passwords should be lenghthy and contain character
-  variations.
+    \item \textit{Physical access to machines} - This can be garnered by the above method or other methods of social engineering/distraction. This shouldn't
+    be too hard to prevent, as long as devices like PC are locked when the user is not there. Long and strong passwords are important protection here also.
+    ACME will have a password policy that makes sure that passwords are changed every 3 months as well meet certain criteria, such as length and special
+    characters contained. I don't recommend a password manager despite their ease of use as this represents a single point of failure. In addition to this
+    these types of services have been hacked in the not so distant future [47]. Tools like haveibeenpwned [48] can also be used to determine whether someones
+    email has been in a recent security breach.
+
+    \item \textit{Access control} - This was discussed earlier in the report in regards to PoLP, and not allowing anyone more access than they need to do 
+    their jobs, including microservice permission. Processes will be put in place to automatically add and remove needed privileges from staff members when 
+    they join or leave. In regards to AWS services, this will be kept in code using IaC [15] and will be down to the developers to manage. However tools can
+    be run against this to check all policies are needed for what the component is doing and should be used to keep these up to date.
+    
+  \end{itemize}
 
   \textbf{Software}
   \vspace{0.2cm}
