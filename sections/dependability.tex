@@ -11,7 +11,7 @@
     \label{fig:dependability}
   \end{figure}
 
-  \subsection{Reliability and fault tolerance}
+  \subsection{Reliability}
   Availability and reliability are closely linked. The image below describes the difference.
   \begin{figure}[H]
     \centering
@@ -31,7 +31,7 @@
   metric, if the user receives a 2** then its OK, a 4** would be a user error and a 5** would be a server error, or downtime in this case. We can 
   then use this data to check the amount of requests that have failed due to internal server errors and check it against the metric.
 
-  \subsubsection{Fault tolerance}
+  \subsection{Fault tolerance}
   Other than third party issues there are security problems that could arise. The first thing to tackle is the code itself, the code should be written in 
   a memory safe language. Non-memory safe languages (such as C) allow programmers direct access to memory which can result in attacks such as buffer
   overflows and use-after-free attacks [34]. Such attacks can end in system failure and sometimes allow a hacker to infiltrate the system. For this 
@@ -121,7 +121,7 @@
     \label{fig:rollbackPipeline}
   \end{figure}
   
-  \subsection{Safety and security threats}
+  \subsection{Difference between safety and security threats}
 
   Safety and security are not the same things when it comes to software, a definition for safety is a:
   \begin{quote}
@@ -137,7 +137,7 @@
   to be transported to another hospital. This was deemed \textit{'the first known case of a life being lost as a result of a hack'} [44].
   In the rest of this section I will discuss how ACMEs' system protects/avoids the two above issues.
 
-  \subsubsection{Safety}
+  \subsection{Safety}
   Safety of a system can often times be linked to harming other peoples health. The system ACME has created can't directly do that, however could have 
   indirect consequences. One issue is financial, a bug in the system could do severe harm to someone financially. There is also a chance cars provided 
   are faulty or the person driving them has provided fake ID in order to gain access to the vehicle, then going and causing people harm by not knowing 
@@ -156,10 +156,10 @@
   Doing the above will help with safety concerns that could arise from ACME's system. There is always a chance something will happen that is out of 
   ACMEs' control, however if the correct steps are taken these occurrences can be minimised.
 
-  \subsubsection{Security}
+  \subsection{Security}
   Security is always an issue in software. I will discuss this in two categories, physical (real-world) security and software security.
 
-  \textbf{Physical}
+  \subsubsection{Physical}
   \vspace{0.2cm}
   Some threats of physical security are reduced due to the cloud-native approach chosen. This is due to no on-prem servers being used, therefore 
   user data is not accessible via physically plugging into the server. However there are still some threats worth discussing.
@@ -183,8 +183,41 @@
     
   \end{itemize}
 
-  \textbf{Software}
-  \vspace{0.2cm}
+  \subsubsection{Software}
+  I have spoke throughout this report about software security risks that can occur if developers are not careful. In this section I want to discuss
+  more about preventative measures that can be taken to avoid software issues from happening.
 
+  \begin{itemize}
+    \item \textbf{Penetration testing} - This \textit{'is a cyberattack simulation launched on your computer system'} [49] most often carried out by a
+    third party. There are 3 different approaches to this, black, grey and white box [50].
+
+    \begin{table}[H]
+      \centering
+      \begin{tabular}{|l|l|}
+        \hline
+        \textbf{Type} & \textbf{Access Granted}   \\ \hline
+        Black Box     & None                      \\ \hline
+        Grey Box      & Some                      \\ \hline
+        White Box     & Full Access               \\ \hline
+      \end{tabular}
+      \caption{Table showing pen testers access using different methodologies.}
+    \end{table}
+
+    I would recommend a mixture of black and white box pen testing. Black box simulates an attacked on the outside trying to gain access to the system.
+    Whilst a white box test gives the pen tester the chance to view the inner workings of the code. This could flag any potential vulnerabilities that 
+    made it through the QA/testing phase. This should be done once a year, as these services can cost 
+    \textit{'anywhere between £600 to over £3000 per day'} [51].
+
+    \item \textbf{Principle of least privilege (PoLP)} - As previously mentioned ACME will incorporate processes for both onboarding and off-boarding 
+    new staff members. No staff member should have any privileges they do not need to do their job. Although this can seem to be untrusting, however 
+    with 34\% of businesses suffering attacks from insiders [52] and 66\% of companies being more worried about an internal attack than a external 
+    attack [52] highlights the potential issue.
+
+    \item \textbf{QA validation/testing} - The value of testing is discussed more in the \hyperref[sec:Testing]{\textbf{Testing}} section.
+    
+    \item \textbf{Code reviews} - 
+    \item \textbf{Strict dependency selection} -
+    \item \textbf{Firewalls/blacklists} - 
+  \end{itemize}
 
 \newpage
