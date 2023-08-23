@@ -42,13 +42,15 @@
   handle issues in that area.
 
   \begin{enumerate}
+    \label{sec:PoLP}
     \item \textit{Limit the visibility of information in a programme} - This can be linked to the Principle of Least Privilege (PoLP) idea which 
     \textit{'refers to an information security concept in which a user is given the minimum levels of access' [36]}. Users, both internal and external, 
     should only have access to what they need to access to do their jobs. 
 
     However this can also be extended in a cloud-native architecture so that the individual components of the system only need permission to access what 
-    they need to function. For example The payment lambda does not need access to the account lambda. This not only break PoLP, but also the whole idea of
-    microservices being self contained operations.
+    they need to function. For example The payment lambda does not need access to the account lambda. This not only breaks PoLP, but also the whole idea of
+    microservices being self contained operations. Steps and process should be in place and enforced to both staff and code to revoke permissions that are no
+    longer needed.
 
     \item \textit{Check all inputs for validity} - This is vital for two reasons. The first is data integrity, you may have a schema that you want users
     data to conform to. This can make querying data easier, but also save money as you won't be having to pay for extra data storage. Additional checks such 
@@ -175,12 +177,7 @@
     characters contained. I don't recommend a password manager despite their ease of use as this represents a single point of failure. In addition to this
     these types of services have been hacked in the not so distant future [47]. Tools like haveibeenpwned [48] can also be used to determine whether someones
     email has been in a recent security breach.
-
-    \item \textit{Access control} - This was discussed earlier in the report in regards to PoLP, and not allowing anyone more access than they need to do 
-    their jobs, including microservice permission. Processes will be put in place to automatically add and remove needed privileges from staff members when 
-    they join or leave. In regards to AWS services, this will be kept in code using IaC [15] and will be down to the developers to manage. However tools can
-    be run against this to check all policies are needed for what the component is doing and should be used to keep these up to date.
-    
+  
   \end{itemize}
 
   \subsubsection{Software}
@@ -208,16 +205,23 @@
     made it through the QA/testing phase. This should be done once a year, as these services can cost 
     \textit{'anywhere between £600 to over £3000 per day'} [51].
 
-    \item \textbf{Principle of least privilege (PoLP)} - As previously mentioned ACME will incorporate processes for both onboarding and off-boarding 
-    new staff members. No staff member should have any privileges they do not need to do their job. Although this can seem to be untrusting, however 
-    with 34\% of businesses suffering attacks from insiders [52] and 66\% of companies being more worried about an internal attack than a external 
-    attack [52] highlights the potential issue.
+    \item \textbf{Principle of least privilege (PoLP)} - As previously \hyperref[sec:PoLP]{\textbf{menitioned}} ACME will incorporate processes for 
+    both onboarding and off-boarding new staff members. No staff member should have any privileges they do not need to do their job. Although this can seem 
+    to be untrusting, however with 34\% of businesses suffering attacks from insiders [52] and 66\% of companies being more worried about an internal attack 
+    than a external attack [52] highlights the potential issue.
 
     \item \textbf{QA validation/testing} - The value of testing is discussed more in the \hyperref[sec:Testing]{\textbf{Testing}} section.
     
-    \item \textbf{Code reviews} - 
-    \item \textbf{Strict dependency selection} -
-    \item \textbf{Firewalls/blacklists} - 
+    \item \textbf{Code reviews} - Code reviews act as a \textit{'second opinion'} [53] on newly implemented code. Another developer should always read any 
+    code that plans to be released to a live environment to help stop bugs reaching consumers.
+
+    \item \textbf{Strict dependency selection} - ACME should use only well known and tested external dependencies. In addition to this these should be checked
+    into code so other developers can review them before live release. There have been multiple instances [54] where packages have been 
+    \textit{'typo-squatted'} [55] and made their way to consumers.
+    
+    \item \textbf{Firewalls/blacklists} - AWS offers services such as WAF [56] to help protect customers against some forms of attacks. An extra layer can be 
+    added to this. Software can be written to determine malicious or concerning usage of the web app, such as excessive requests (DDos) attack [57]. 
+    These can then be put onto a blacklist and their requests can be dropped from then on.
   \end{itemize}
 
 \newpage

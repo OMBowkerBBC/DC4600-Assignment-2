@@ -8,14 +8,14 @@
   \end{quote}
 
   For this reason I will not only propose the architectural design pattern to use, however come up with a diagrams to show how the system could be integrated.
-  In addition to this I will also discuss programming languages and how they relate to design decisions made.
+  In addition to this I will also discuss programming languages and how they relate to design decisions made. Details of the design can be found in 
+  \hyperref[sec:AppendixB]{\textbf{Appendix B}}.
 
   \subsection{Overall Architecture}
   The architecture I decided to choose for ACME was a Cloud-Native architecture. AWS, the largest cloud provider [2], describes this architecture as the 
   \textit{'approach of building, deploying, and managing modern applications in cloud computing environments'} [3]. In simpler terms, developers can setup
   \textit{'virtual'} servers that a third party houses to run their software, they provide the infrastructure, you provide the code/instructions. These servers
-  use virtualisation \textit{'allows the hardware elements of a single computer ... to be divided into multiple virtual computers'} [4]. The image below 
-  illustrates how this works, how this works is out of the scope for this report.
+  use virtualisation \textit{'allows the hardware elements of a single computer ... to be divided into multiple virtual computers'} [4]. 
 
   \begin{figure}[H]
     \centering
@@ -39,15 +39,6 @@
     \caption{Simple diagram illustrating how a system can use microservices.}
     \label{fig:microservices}
   \end{figure}
-
-  Microservices are extremely helpful to stop full system outages. Looking at the above figure can help to demonstrate this. If the payment system went
-  suffered a failure, the account system would still be accessible, meaning that some functionality still persisted. If both of these systems were bundled
-  together, the system would have no functionality available and would then result in downtime. A quote from Benjamin Franklin illustrates the damage the 
-  above can cause to a company:
-
-  \begin{quote}
-    \textit{'It takes many good deeds to build a good reputation, and only one bad one to lose it.'}
-  \end{quote}
 
   Customers will go to competitors if they deem your service to be unreliable or cannot access you're system. This is another area where cloud-native shines 
   as they provide redundancy. AWS calls these AZs (Availability Zones) [8] in simple terms they represent different data centers. So if one data center 
@@ -100,24 +91,7 @@
   Despite the above I still feel cloud-native is the best approach. With the size of companies like AWS, Azure and Google it's unlikely they'll disappear
   overnight. Lock in and hacks are both concerns, however as was previously stated even with on-prem services you can end up getting hacked, and changing
   certain aspects of the infrastructure can still cause issues. These potentialities don't make up for the realities; speed of development, fallbacks, 
-  lower cost and array of services that the cloud can offer. 
-
-  \subsection{Cloud-native solution using AWS}
-  This solution will be built primarily using a cloud-native approach, however as this system is somewhat large there is room for other 
-  architectural patterns to be used in sub systems of the overall build. Below is a high level look at how the system could be create using AWS:
-
-  \begin{figure}[H]
-    \centering
-    \includegraphics[width=12cm]{assets/architectureEvents.drawio.png}
-    \caption{Diagram showing the proposed architecture for the whole system.}
-    \label{fig:architecture}
-  \end{figure}
-
-  The main component is the Server Side Rendered front end. This can then communicate with the blockchain for crypto transactions using a wallet provider,
-  e.g. Metamask [18]. The main functionality is that the front end is then able to send events through EventBridge [19] to individual lambdas [20] for different 
-  functionality. These lambdas can then store data into the database. The payment lambda uses Stripe [21] to process payments, and the \textit{'car lambda'} is
-  for internal use only, hence the lock on its connection. These topics will be discussed more in the 
-  \hyperref[sec:Dependability]{\textbf{Dependability}} section.
+  lower cost and an array of services that the cloud can offer. 
 
   \newpage
   \subsubsection{Sub architectures in a cloud-native approach}
