@@ -2,12 +2,12 @@
   \label{sec:Dependability}
   In the following section I will discuss how the proposed architecture for the new ACME system is dependable. In his book \textit{Software Engineering}, Ian 
   Sommerville describes the term dependability to mean \textit{'The dependability of a computer system is a property of the system that reflects its 
-  trustworthiness.'} [32]. He the breaks this down into 5 sections which I will now discuss.
+  trustworthiness.'} [28]. He the breaks this down into 5 sections which I will now discuss.
 
   \begin{figure}[H]
     \centering
     \includegraphics[width=12cm]{assets/dependability.png}
-    \caption{Diagram showing the different parts of dependability [32].}
+    \caption{Diagram showing the different parts of dependability [28].}
     \label{fig:dependability}
   \end{figure}
 
@@ -16,7 +16,7 @@
   \begin{figure}[H]
     \centering
     \includegraphics[width=5cm]{assets/avail-reliab.png}
-    \caption{Diagram showing the difference between availability and reliability [33].}
+    \caption{Diagram showing the difference between availability and reliability [29].}
     \label{fig:availabilityVsReliability}
   \end{figure}
 
@@ -34,17 +34,17 @@
   \subsection{Fault tolerance}
   Other than third party issues there are security problems that could arise. The first thing to tackle is the code itself, the code should be written in 
   a memory safe language. Non-memory safe languages (such as C) allow programmers direct access to memory which can result in attacks such as buffer
-  overflows and use-after-free attacks [34]. Such attacks can end in system failure and sometimes allow a hacker to infiltrate the system. For this 
+  overflows and use-after-free attacks [30]. Such attacks can end in system failure and sometimes allow a hacker to infiltrate the system. For this 
   reason I would suggest ACME use a language like Python. Not only is it memory safe, but it's got a vibrant community and an older study showed
-  that the total code written and time spent writing was the lowest out of a handful of other languages [35].
+  that the total code written and time spent writing was the lowest out of a handful of other languages [31].
 
-  Ian Sommerville outlines 8 steps for dependable programming guidelines [32]. I will now go through each one and give examples of how ACMEs' system can 
+  Ian Sommerville outlines 8 steps for dependable programming guidelines [28]. I will now go through each one and give examples of how ACMEs' system can 
   handle issues in that area.
 
   \begin{enumerate}
     \label{sec:PoLP}
     \item \textit{Limit the visibility of information in a programme} - This can be linked to the Principle of Least Privilege (PoLP) idea which 
-    \textit{'refers to an information security concept in which a user is given the minimum levels of access' [36]}. Users, both internal and external, 
+    \textit{'refers to an information security concept in which a user is given the minimum levels of access' [32]}. Users, both internal and external, 
     should only have access to what they need to access to do their jobs. 
 
     However this can also be extended in a cloud-native architecture so that the individual components of the system only need permission to access what 
@@ -54,9 +54,9 @@
 
     \item \textit{Check all inputs for validity} - This is vital for two reasons. The first is data integrity, you may have a schema that you want users
     data to conform to. This can make querying data easier, but also save money as you won't be having to pay for extra data storage. Additional checks such 
-    as size and range checks [32] should be done, and helpful error messages returned to the client so they know what to change.
+    as size and range checks [28] should be done, and helpful error messages returned to the client so they know what to change.
     
-    However the main reason is security. In the OWASP top 10 vulnerabilities list [37] \textit{'Injection'} is 3rd and covers both XSS (Cross Site Scripting) 
+    However the main reason is security. In the OWASP top 10 vulnerabilities list [33] \textit{'Injection'} is 3rd and covers both XSS (Cross Site Scripting) 
     and SQL injection attacks. These are nearly always exploited via uncheck/unsanitised inputs. Both client and server side checks must be made on any data
     provided by the user. 
 
@@ -72,9 +72,9 @@
       \label{fig:errorHandling}
     \end{figure}
 
-    \item \textit{Minimise the use of error-prone constructs} - A list of these constructs was compiled by Ian Somerville [38], however a lot of these
+    \item \textit{Minimise the use of error-prone constructs} - A list of these constructs was compiled by Ian Somerville [34], however a lot of these
     are outdated, and refer to languages like C where memory allocation, array bound checking and pointers all posed issues for the developer when used
-    incorrectly. However there are more modern bad coding practices that should be adhered to. One of these principles is DRY code [39], which refers to 
+    incorrectly. However there are more modern bad coding practices that should be adhered to. One of these principles is DRY code [35], which refers to 
     clear concise code and Don't Repeat Yourself. Other issues are poor documentation. If everyone left the team then the new employees need this 
     documentation to fully understand how the system works.
 
@@ -91,7 +91,7 @@
     around waiting when the data may never be returned. Most libraries allow developers to add timeouts to any network request made and this is 
     implemented into the ACME system.
 
-    \item \textit{Name all constants that represent real-world values} - This is a good practice and is sometime reffered to as \textit{'magic numbers'} [40].
+    \item \textit{Name all constants that represent real-world values} - This is a good practice and is sometime reffered to as \textit{'magic numbers'} [36].
     This can be troublesome when these hard-coded values are used in multiple places. Using config files for these values that can then be imported 
     throughout the project. This means if the value has to be changed, it can be changed in one place, making it much more maintainable and configurable
     in the future. It also makes code more readable instead of having seemingly random values throughout the code.
@@ -107,10 +107,10 @@
   \end{enumerate}
 
   AWS uses metrics to track events, these can be both default and custom metrics defined in code. These metrics can then be hooked up to alarms which 
-  when state changes can trigger events that are handled by the EventBridge currently in the architecture [41]. These events can then be used to trigger
+  when state changes can trigger events that are handled by the EventBridge currently in the architecture [37]. These events can then be used to trigger
   additional actions such as code rollbacks or additional checks to determine the issue.
 
-  Rollbacks could be made possible by using Jenkins [42], which is a CI/CD provider that allows versioned deployment at the click of a button. This kind 
+  Rollbacks could be made possible by using Jenkins [38], which is a CI/CD provider that allows versioned deployment at the click of a button. This kind 
   of action should only be taken on components that render the service unusable though. This automation of rolling back could have other consequences to 
   other systems and therefore should be a last resort and very well tested. For example if a microservice failed, it might not be worth having this automatic
   process. However if the web front end encountered system failure it'd be worth auto restarting, especially when there is no staff currently working to 
@@ -127,16 +127,16 @@
 
   Safety and security are not the same things when it comes to software, a definition for safety is a:
   \begin{quote}
-    \textit{'should never damage people or environment even though the system fails'} [43]
+    \textit{'should never damage people or environment even though the system fails'} [39]
   \end{quote}
 
   Where as security can described as:
   \begin{quote}
-    \textit{'a system attribute that reflects the ability of the system to protect itself from external attacks, which may be accidental or deliberate.'} [43]
+    \textit{'a system attribute that reflects the ability of the system to protect itself from external attacks, which may be accidental or deliberate.'} [39]
   \end{quote}
 
   Despite this there are situations in which these two can cross over fully. A german hospital was hacked and a woman ended up dying due the hack forcing her 
-  to be transported to another hospital. This was deemed \textit{'the first known case of a life being lost as a result of a hack'} [44].
+  to be transported to another hospital. This was deemed \textit{'the first known case of a life being lost as a result of a hack'} [40].
   In the rest of this section I will discuss how ACMEs' system protects/avoids the two above issues.
 
   \subsection{Safety}
@@ -151,7 +151,7 @@
   monitored to help customers who have problems. This will hopefully stop any harm coming to customers as their funds should be returned promptly.
 
   To verify drivers are who they say they are ACME has multiple checks keys are given to a customer. The UK government offers a service to check 
-  the validity of individuals driving licenses [45], which will be used when the customer creates an account to rent a vehicle with. However to 
+  the validity of individuals driving licenses [41], which will be used when the customer creates an account to rent a vehicle with. However to 
   add further security to this, drivers licenses must be checked when the customer comes into the lot to pick the car up. If something isn't correct,
   the customer is refunded and the car is not rented to them.
 
@@ -167,7 +167,7 @@
   user data is not accessible via physically plugging into the server. However there are still some threats worth discussing.
 
   \begin{itemize}
-    \item \textit{Tailgating} - This is a method where an \textit{'unauthorized person gains physical access to an off-limits location'} [46]. This can 
+    \item \textit{Tailgating} - This is a method where an \textit{'unauthorized person gains physical access to an off-limits location'} [42]. This can 
     lead this individual gaining access to machines or information they shouldn't have access to. Staff training is required here as well as tight security
     policies around passes. Gates should only allow one person through at a time and staff should report any suspicious behaviour.
 
@@ -175,7 +175,7 @@
     be too hard to prevent, as long as devices like PC are locked when the user is not there. Long and strong passwords are important protection here also.
     ACME will have a password policy that makes sure that passwords are changed every 3 months as well meet certain criteria, such as length and special
     characters contained. I don't recommend a password manager despite their ease of use as this represents a single point of failure. In addition to this
-    these types of services have been hacked in the not so distant future [47]. Tools like haveibeenpwned [48] can also be used to determine whether someones
+    these types of services have been hacked in the not so distant future [43]. Tools like haveibeenpwned [44] can also be used to determine whether someones
     email has been in a recent security breach.
   
   \end{itemize}
@@ -185,8 +185,8 @@
   more about preventative measures that can be taken to avoid software issues from happening.
 
   \begin{itemize}
-    \item \textbf{Penetration testing} - This \textit{'is a cyberattack simulation launched on your computer system'} [49] most often carried out by a
-    third party. There are 3 different approaches to this, black, grey and white box [50].
+    \item \textbf{Penetration testing} - This \textit{'is a cyberattack simulation launched on your computer system'} [45] most often carried out by a
+    third party. There are 3 different approaches to this, black, grey and white box [46].
 
     \begin{table}[H]
       \centering
@@ -203,24 +203,24 @@
     I would recommend a mixture of black and white box pen testing. Black box simulates an attacked on the outside trying to gain access to the system.
     Whilst a white box test gives the pen tester the chance to view the inner workings of the code. This could flag any potential vulnerabilities that 
     made it through the QA/testing phase. This should be done once a year, as these services can cost 
-    \textit{'anywhere between £600 to over £3000 per day'} [51].
+    \textit{'anywhere between £600 to over £3000 per day'} [47].
 
     \item \textbf{Principle of least privilege (PoLP)} - As previously \hyperref[sec:PoLP]{\textbf{menitioned}} ACME will incorporate processes for 
     both onboarding and off-boarding new staff members. No staff member should have any privileges they do not need to do their job. Although this can seem 
-    to be untrusting, however with 34\% of businesses suffering attacks from insiders [52] and 66\% of companies being more worried about an internal attack 
-    than a external attack [52] highlights the potential issue.
+    to be untrusting, however with 34\% of businesses suffering attacks from insiders [48] and 66\% of companies being more worried about an internal attack 
+    than a external attack [48] highlights the potential issue.
 
     \item \textbf{QA validation/testing} - The value of testing is discussed more in the \hyperref[sec:Testing]{\textbf{Testing}} section.
     
-    \item \textbf{Code reviews} - Code reviews act as a \textit{'second opinion'} [53] on newly implemented code. Another developer should always read any 
+    \item \textbf{Code reviews} - Code reviews act as a \textit{'second opinion'} [49] on newly implemented code. Another developer should always read any 
     code that plans to be released to a live environment to help stop bugs reaching consumers.
 
     \item \textbf{Strict dependency selection} - ACME should use only well known and tested external dependencies. In addition to this these should be checked
-    into code so other developers can review them before live release. There have been multiple instances [54] where packages have been 
-    \textit{'typo-squatted'} [55] and made their way to consumers.
+    into code so other developers can review them before live release. There have been multiple instances [50] where packages have been 
+    \textit{'typo-squatted'} [51] and made their way to consumers.
     
-    \item \textbf{Firewalls/blacklists} - AWS offers services such as WAF [56] to help protect customers against some forms of attacks. An extra layer can be 
-    added to this. Software can be written to determine malicious or concerning usage of the web app, such as excessive requests (DDos) attack [57]. 
+    \item \textbf{Firewalls/blacklists} - AWS offers services such as WAF [52] to help protect customers against some forms of attacks. An extra layer can be 
+    added to this. Software can be written to determine malicious or concerning usage of the web app, such as excessive requests (DDos) attack3[53]. 
     These can then be put onto a blacklist and their requests can be dropped from then on.
   \end{itemize}
 

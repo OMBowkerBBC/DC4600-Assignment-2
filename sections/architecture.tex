@@ -112,7 +112,7 @@
     \item \textbf{Microservices} - Microservices have been mentioned in this report already, however the design illustrates how helpful they can be. The 4 
     lambdas in the design work independently of each other. If there's an issue with the payment lambda, users can still access the functionality provided by 
     the account lambda. Breaking the structure down this way also makes code more maintainable, as you can have separate repos for each component. A study 
-    in 2017 [22] that compared 3 different deployment options, monolithic, microservices and lambda. In this study the microservices architecture still used
+    in 2017 [18] that compared 3 different deployment options, monolithic, microservices and lambda. In this study the microservices architecture still used
     EC2s/servers but instead had multiple smaller ones doing tasks, ACMEs' new design is more reminiscent of the \textit{'lambda'} implementation, which used
     different AWS services to achieve its goal. As can be seen in the below, the suggested architecture can not only be cheaper using the microservice/lambda 
     approach, but can actually result in quicker response times for the consumer.
@@ -121,40 +121,40 @@
       \centering
       \includegraphics[width=8cm]{assets/costComparison.png}
       \includegraphics[width=8cm]{assets/responseTimeComparison.png}
-      \caption{Charts showing results for the 3 solutions [22].}
+      \caption{Charts showing results for the 3 solutions [19].}
       \label{fig:costComparison}
     \end{figure}
 
-    Microservices aren't always the way to go, in fact Amazon themselves swapped away from this architecture for their live audio/video monitoring service [23].
+    Microservices aren't always the way to go, in fact Amazon themselves swapped away from this architecture for their live audio/video monitoring service [19].
     This makes sens as serverless/microservices are not made for continuous running. The microservices in ACMEs design would only run when they received events
     to do so.
 
     \item \textbf{Event-Based} - In the above design AWS EventBridge [19] is used to fire events to the individual lambdas. A benefit of this is the 
     responsiveness of the system. The client side has 0 wait time, as the event is fired off to the EventBridge which then routes the message to the correct 
     processor. Website performance is key to customer retention, one of ACMEs' business goals. An article by The Drum states that \textit{'79\% of people 
-    wouldn't return to a site that had previously performed poorly for them' [24]}. Another article quotes:
+    wouldn't return to a site that had previously performed poorly for them' [20]}. Another article quotes:
     \begin{quote}
-      \textit{'Previous research has shown that user frustration increases when page load times exceed eight to 10 seconds, without feedback' [25]}
+      \textit{'Previous research has shown that user frustration increases when page load times exceed eight to 10 seconds, without feedback' [21]}
     \end{quote}
     This event-driven approach minimises this load time. The EventBridge and its rules also filters out any bad traffic/events people try to send to it
     resulting in only valid event being processed.
 
     Some issues with event-based systems is error handling, which I will cover later in the report, and duplicated events. The system would have to have 
     some code built in to it to stop people creating multiple orders instead of just the 1. Techniques like debouncing (\textit {'a function ensures that 
-    it doesn't get called too frequently.'} [26]) can be used to stop this. 
+    it doesn't get called too frequently.'} [22]) can be used to stop this. 
 
     \item \textbf{Peer-2-Peer} - Finally my system is exposed to the P2P architecture due to the nature of cryptocurrency. Peer to peer can be described as:
     \begin{quote}
       \textit{'a decentralized platform whereby two individuals interact directly with each other, without intermediation 
-      by a third party.'} [27]
+      by a third party.'} [23]
     \end{quote}
 
     So if a user was to pay with cryptocurrency, there is no Stripe or bank in between ACME and their finances, ACME hs full control over that transaction.
-    Smart contracts [28] can be used to automate and validate payments made, however this requires knowledge of the Solidity [29] programming language, which 
+    Smart contracts [24] can be used to automate and validate payments made, however this requires knowledge of the Solidity [25] programming language, which 
     is the language used to write smart contracts. In my previous report I spoke about how quickly cryptocurrency adoption is growing. But there are other 
     benefits to using the P2P architecture. As previously stated, the automation smart contracts allow, as well as no middle-men make the process smooth.
     Security of these contracts is paramount, so audits of this code should be carried out. Tools such as Chat GPT have been tested to audit 
-    smart contracts, with mixed results [30][31].
+    smart contracts, with mixed results [26][27].
 
   \end{itemize}
 

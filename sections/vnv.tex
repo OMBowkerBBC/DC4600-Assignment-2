@@ -3,11 +3,11 @@
   v approved as well as discuss more about the deployment and testing of the new system.
 
   \begin{quote}
-    \textit{'The aim of validation is to ensure that the software meets the customer's expectations'} [TODO1]
+    \textit{'The aim of validation is to ensure that the software meets the customer's expectations'} [54]
   \end{quote}
 
   \begin{quote}
-    \textit{'The aim of verification is to check that the software meets its stated functional and non-functional requirements'} [TODO1]
+    \textit{'The aim of verification is to check that the software meets its stated functional and non-functional requirements'} [54]
   \end{quote}
 
 
@@ -24,32 +24,32 @@
   \label{sec:Testing}
 
   Software testing is a huge part of verifying that the software written is up to a high standard and works as intended. When software is not
-  tested issues such as poor quality, performance and user experience, security vulnerabilities and increased maintenance cost [TODO2] can all 
+  tested issues such as poor quality, performance and user experience, security vulnerabilities and increased maintenance cost [55] can all 
   occur.
 
   \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{assets/testingPyramid.jpg}
-    \caption{Image showing the testing pyramid, representing types of test and their quantity. [TODO3]}
+    \caption{Image showing the testing pyramid, representing types of test and their quantity. [56]}
     \label{fig:testingPyramid}
   \end{figure}
 
   The testing pyramid above shows the types of testing ACME performs as well as demonstrates the quantity of each type of test.
   \begin{itemize}
     \item \textbf{Unit Tests} - These can be described as \textit{'consist[ing] in testing individual methods and functions of the classes, components, 
-    or modules'} [TODO4]. A simple example of a unit test would be to make sure a function that adds two number together, provides the expected result
-    when given those two numbers. Mocking, \textit{'replacement object for [a] dependency'} [TODO5] are often used in these types of test to remain cheap
+    or modules'} [57]. A simple example of a unit test would be to make sure a function that adds two number together, provides the expected result
+    when given those two numbers. Mocking, \textit{'replacement object for [a] dependency'} [58] are often used in these types of test to remain cheap
     to run. Mocks stop expensive calls to databases or web requests by providing a pre-programmed response that the test can use instead. Due to their 
     lower cost unit tests can be ran before every deployment. This will be described more in the \hyperref[sec:Deployment]{\textbf{Deployment}} 
     section that follows.
 
     \item \textbf{Integration Tests} - Unlike the aforementioned unit tests, integration tests want to test the actual functionality of the system, thus 
     making them more costly. Or in other words \textit{'Integration tests verify that different modules or services used by your application work well
-    together'} [TODO4]. These are run on a schedule rather than at deployment to help lower the overall expenditure of testing. 
+    together'} [57]. These are run on a schedule rather than at deployment to help lower the overall expenditure of testing. 
   
-    \item \textbf{End-to-end (E2E) Tests} - End-to-end tests, also known as UI tests, \textit{'replicates a user behavior with the software'} [TODO4].
+    \item \textbf{End-to-end (E2E) Tests} - End-to-end tests, also known as UI tests, \textit{'replicates a user behavior with the software'} [57].
     This is done on software that is either live, or functions the exact same way the live system does. This is the most expensive type of testing as
-    it often requires a large overhead to run. For example a library like Puppeteer [TODO6] uses the chromium browser to make network requests to a 
+    it often requires a large overhead to run. For example a library like Puppeteer [59] uses the chromium browser to make network requests to a 
     specified test url and then replicates user actions and runs assertions based on those actions. This is a lot more CPU intensive work than the 
     previous tests, and similar to integration tests should be run on a schedule. These types of tests are the smallest area of testing however due 
     to their increased cost.
@@ -72,13 +72,13 @@
   \end{table}
 
   The above table shows ACME's testing patterns. Most is quite self-explanatory, the only strange one is that P2P/Blockchain and UI tests are not on 
-  the same cadence. This was a decision made due to cost. Blockchains require a gas fee [TODO7] when transacting on them. If this is done on a live 
+  the same cadence. This was a decision made due to cost. Blockchains require a gas fee [60] when transacting on them. If this is done on a live 
   environment this is going to cost money to pay that fee. Therefore I have lowered this testing suite down to once a week instead of twice.
 
   \subsection{Deployment}
   \label{sec:Deployment}
 
-  Deployment can be described as the \textit{'process of putting software and software solutions into use or action'} [TODO8]. This stage can be
+  Deployment can be described as the \textit{'process of putting software and software solutions into use or action'} [61]. This stage can be
   used to run tests, build and of course deploy the final application. Below is the jenkins pipeline ACME uses to deploy their app.
 
   \begin{figure}[H]
