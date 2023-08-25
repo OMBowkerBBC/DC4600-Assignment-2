@@ -51,8 +51,31 @@
     \label{fig:architecture}
   \end{figure}
 
-  The main component is the Server Side Rendered front end. This can then communicate with the blockchain for crypto transactions using a wallet provider,
-  e.g. Metamask [62]. The main functionality is that the front end is then able to send events through EventBridge [63] to individual lambdas [64] for different 
-  functionality. These lambdas can then store data into the database. The payment lambda uses Stripe [65] to process payments, and the \textit{'car lambda'} is
+  The main component is the Server-side Rendered front end. This can then communicate with the blockchain for crypto transactions using a wallet provider,
+  e.g. Metamask [61]. The main functionality is that the front end is then able to send events through EventBridge [62] to individual lambdas [63] for different 
+  functionality. These lambdas can then store data into the database. The payment lambda uses Stripe [64] to process payments, and the \textit{'car lambda'} is
   for internal use only, hence the lock on its connection. These topics will be discussed more in the 
   \hyperref[sec:Dependability]{\textbf{Dependability}} section.
+
+\subsection{Appendix C - ACMEs testing strategy}
+\label{sec:AppendixC}
+
+  \begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|l|}
+      \hline
+      \textbf{Test Name}    & \textbf{Test Type}  & \textbf{Cadence}  \\ \hline
+      UI tests              & E2E                 & Twice a week      \\ \hline
+      Booking tests         & Integration         & Daily             \\ \hline
+      Payments tests        & Integration         & Daily             \\ \hline     
+      Account tests         & Integration         & Daily             \\ \hline     
+      Car tests             & Integration         & Daily             \\ \hline   
+      P2P/Blockchain tests  & E2E                 & Weekly            \\ \hline 
+      Unit tests            & Unit                & On deployment     \\ \hline    
+    \end{tabular}
+    \caption{Table showing ACMEs tests and testing pattern}
+  \end{table}
+
+  The above table shows ACME's testing patterns. Most is quite self-explanatory, the only strange one is that P2P/Blockchain and UI tests are not on 
+  the same cadence. This was a decision made due to cost. Blockchains require a gas fee [65] when transacting on them. If this is done on a live 
+  environment this is going to cost money to pay that fee. Therefore I have lowered this testing suite down to once a week instead of twice.

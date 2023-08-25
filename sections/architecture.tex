@@ -1,21 +1,19 @@
 \section{Architecture of the new system}
-  In this section I will discuss the proposed architecture for the system, justifying why I think it is the best pattern for ACME and compare it against 
-  some alternatives. System architecture is described by Ian Sommerville as:
+  System architecture is described by Ian Sommerville as:
   \begin{quote}
     \textit{'Software architecture is the fundamental organization of a system embodied in its
     components, their relationships to each other and to the environment, and the principles
     guiding its design and evolution.'} [1]
   \end{quote}
 
-  For this reason I will not only propose the architectural design pattern to use, however come up with a diagrams to show how the system could be integrated.
-  In addition to this I will also discuss programming languages and how they relate to design decisions made. Details of the design can be found in 
-  \hyperref[sec:AppendixB]{\textbf{Appendix B}}.
+  Following will be the proposed design for ACME and a discussion on programming languages and how they relate to design decisions made. 
+  Details of the design can be found in \hyperref[sec:AppendixB]{\textbf{Appendix B}}.
 
   \subsection{Overall Architecture}
-  The architecture I decided to choose for ACME was a Cloud-Native architecture. AWS, the largest cloud provider [2], describes this architecture as the 
+  The architecture I have chosen is a Cloud-Native architecture. AWS, the largest cloud provider [2], describes this architecture as the 
   \textit{'approach of building, deploying, and managing modern applications in cloud computing environments'} [3]. In simpler terms, developers can setup
-  \textit{'virtual'} servers that a third party houses to run their software, they provide the infrastructure, you provide the code/instructions. These servers
-  use virtualisation \textit{'allows the hardware elements of a single computer ... to be divided into multiple virtual computers'} [4]. 
+  \textit{'virtual'} servers that a third-party houses to run their software, they provide the infrastructure, you provide the code/instructions. 
+  These servers use virtualisation \textit{'allows the hardware elements of a single computer ... to be divided into multiple virtual computers'} [4]. 
 
   \begin{figure}[H]
     \centering
@@ -25,8 +23,8 @@
   \end{figure}
 
   \subsection{Justification for a cloud-native approach}
-  ACMEs' plan is an ambitious one, going from a paper-based system to a fully digitised solution that incorporates cryptocurrency are polar opposites! One of 
-  the big factors is ACME's lack of starting infrastructure. In order to purchase the servers, database software and account management software alone would
+  ACMEs' plan is an ambitious one, going from a paper-based system to a fully digitised solution that incorporates cryptocurrency are opposites! A large 
+  factor is ACME's lack of starting infrastructure. The purchasing of servers, database and account management software alone would
   cost a lot of money. This financial burden is somewhat lessened by using a cloud-native approach as you pay for what you use and companies such as AWS offer
   a free tier [6].
   
@@ -41,13 +39,13 @@
   \end{figure}
 
   Customers will go to competitors if they deem your service to be unreliable or cannot access you're system. This is another area where cloud-native shines 
-  as they provide redundancy. AWS calls these AZs (Availability Zones) [8] in simple terms they represent different data centers. So if one data center 
-  has an issue, your entire infrastructure can be \textit{'ported'} to another one. Coupled with this is the fact the services offered by these cloud
-  providers have been tested by millions of people, so are resilient, but also the cost to develop some of these solutions from scratch could be
+  as they provide redundancy. AWS calls these AZs (Availability Zones) [8] these represent different data centers. So if one data center 
+  has an issue, your entire infrastructure can be \textit{'ported'} to another one automatically. Coupled with this is the fact the services offered by 
+  these cloud providers have been tested by millions of people, so are resilient, but also the cost to develop some of these solutions from scratch would be
   extremely costly.
 
   Using cloud-native providers also alleviates some of the responsibility. Google [9], AWS [10] and Azure [11] all have shared responsibility models where 
-  they determine who is in charge of what. This gives a team less to worry about, as with certain packages operating systems, networking and even 
+  they determine who oversees what. This gives a team less to worry about, as with certain packages operating systems, networking and even 
   security patches can all be handled and managed by the cloud provider, dependant on what kind of service you are using.
 
   Finally a cloud-native approach is much more scalable and resilient. There are two ways to scale, vertically and horizontally.
@@ -62,7 +60,7 @@
 
   In an on-prem situation, scaling is expensive in both ways, buying a whole new server is not feasible for ACME, never mind the management of how
   redundancy takes place. But upgrading the hardware would also not be too cheap either. Cloud providers work at such a large scale that they can offer
-  these features at a fraction of the cost that on-prem can. In addition there are options provided by the cloud firms to have fallbacks for failures and 
+  these features at a fraction of the cost that on-prem can. In addition there are options provided by the cloud providers to have fallbacks for failures and 
   load balancing for quicker response times. These are features that are costly to develop and maintain on ones own. 
 
   \subsection{Drawbacks of a cloud-native approach}
@@ -74,7 +72,7 @@
     others were caught up in an attack that revealed sensitive information about staff [14]. This was done by an attack using an external provider to gain 
     access to the companies using it. Although this is very unlikely, and even with full-control hacks could happen, it's something to consider.
     \item \textbf{Lock in} - Once you've picked a cloud provider to go with, the more infrastructure you build the harder it is to move away. With 
-    IaC (Infrastructure as Code) [15] being used in a lot of organisations, it's not just a service switch, it can be an entire rewrite of 1000s of lines
+    IaC (Infrastructure as Code) [15] being used in a lot of organisations, it's not just a service switch, it can be the rewriting of 1000s of lines
     of code. Research is vital here, making sure the organisation you go with has the things you need and is expanding is vital to not reach a situation where
     you can't build what you want. 
     \item \textbf{Lack of control} - You can't control what stays and what gos on the providers platform. They could deprecate systems you were using leaving 
@@ -83,20 +81,17 @@
     therefore unsafe to use it. In addition to this, features are usually \textit{soft deprecated} which refer to \textit{'an API which should no longer be 
     used to write new code, but it remains safe to continue using it in existing code'} [17].
     \item \textbf{Knowledge} - Cloud development and IAC [15] requires knowledge of how they work and piece together. ACME can put their developers who create
-    the site on courses to learn this or hire a specialist who knows all about it already. Either this is an additional cost/factor to think about. I 
+    the site on courses to learn this or hire a specialist who knows all about it already. This is an additional cost/factor to think about. I 
     don't see this is an issue though, as with the on-prem alternative you also need someone to manage the physical hardware as well as the software 
     running on it.
   \end{itemize}
 
-  Despite the above I still feel cloud-native is the best approach. With the size of companies like AWS, Azure and Google it's unlikely they'll disappear
-  overnight. Lock in and hacks are both concerns, however as was previously stated even with on-prem services you can end up getting hacked, and changing
-  certain aspects of the infrastructure can still cause issues. These potentialities don't make up for the realities; speed of development, fallbacks, 
-  lower cost and an array of services that the cloud can offer. 
+  Despite these potentialities the realities; speed of development, fallbacks, lower cost and an array of services still make cloud-native the best choice.
 
   \newpage
   \subsubsection{Sub architectures in a cloud-native approach}
   As previously mentioned, using a cloud-native approach allows access to multiple services. These services have different architectures that we can take
-  advantage of for individual parts/components of the system. Below breaks down the previous architecture in to these separate architectures.
+  advantage of for individual parts/components of the system. Below breaks down the previous architecture into these separate architectures/services.
 
   \begin{figure}[H]
     \centering
@@ -140,7 +135,7 @@
     resulting in only valid event being processed.
 
     Some issues with event-based systems is error handling, which I will cover later in the report, and duplicated events. The system would have to have 
-    some code built in to it to stop people creating multiple orders instead of just the 1. Techniques like debouncing (\textit {'a function ensures that 
+    some code built into it to stop people creating multiple orders instead of just the 1. Techniques like debouncing (\textit {'a function ensures that 
     it doesn't get called too frequently.'} [22]) can be used to stop this. 
 
     \item \textbf{Peer-2-Peer} - Finally my system is exposed to the P2P architecture due to the nature of cryptocurrency. Peer to peer can be described as:
@@ -150,11 +145,11 @@
     \end{quote}
 
     So if a user was to pay with cryptocurrency, there is no Stripe or bank in between ACME and their finances, ACME hs full control over that transaction.
-    Smart contracts [24] can be used to automate and validate payments made, however this requires knowledge of the Solidity [25] programming language, which 
-    is the language used to write smart contracts. In my previous report I spoke about how quickly cryptocurrency adoption is growing. But there are other 
-    benefits to using the P2P architecture. As previously stated, the automation smart contracts allow, as well as no middle-men make the process smooth.
-    Security of these contracts is paramount, so audits of this code should be carried out. Tools such as Chat GPT have been tested to audit 
-    smart contracts, with mixed results [26][27].
+    Smart contracts [24] can be used to automate and validate payments made, however this requires knowledge of the Solidity [25] programming language. 
+    
+    In my previous report I spoke about how quickly cryptocurrency adoption is growing. The automation through smart contracts allow and no middle-men 
+    make the process easy to implement. Security of these contracts is paramount, so audits of this code should be carried out. Tools such as Chat GPT have been 
+    tested to audit smart contracts, with mixed results [26][27].
 
   \end{itemize}
 

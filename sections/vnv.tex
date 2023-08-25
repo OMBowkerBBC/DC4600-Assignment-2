@@ -13,7 +13,7 @@
 
   \subsection{Customer Feedback}
   To validate the product has met customer expectations, I think it's important to first note that the old system of phoning/emailing is still in 
-  place for customers who don't want to transition to the new system. System on the web front-end could be put into place in the future to help 
+  place for customers who don't want to transition to the new system. Systems on the web front-end could be put into place in the future to help 
   gain feedback of how the customer experience was and how it could be improved.
 
   In the previous report I spoke about how using the Agile software development lifecycle would also help keep customers/stakeholders involved in the 
@@ -23,9 +23,8 @@
   \subsection{Testing}
   \label{sec:Testing}
 
-  Software testing is a huge part of verifying that the software written is up to a high standard and works as intended. When software is not
-  tested issues such as poor quality, performance and user experience, security vulnerabilities and increased maintenance cost [55] can all 
-  occur.
+  When software is not tested issues such as poor quality, performance and user experience, security vulnerabilities and increased maintenance cost [55]
+  can all occur.
 
   \begin{figure}[H]
     \centering
@@ -38,47 +37,27 @@
   \begin{itemize}
     \item \textbf{Unit Tests} - These can be described as \textit{'consist[ing] in testing individual methods and functions of the classes, components, 
     or modules'} [57]. A simple example of a unit test would be to make sure a function that adds two number together, provides the expected result
-    when given those two numbers. Mocking, \textit{'replacement object for [a] dependency'} [58] are often used in these types of test to remain cheap
-    to run. Mocks stop expensive calls to databases or web requests by providing a pre-programmed response that the test can use instead. Due to their 
-    lower cost unit tests can be ran before every deployment. This will be described more in the \hyperref[sec:Deployment]{\textbf{Deployment}} 
-    section that follows.
+    when given two numbers. Mocking, \textit{'replacement object for [a] dependency'} [58] are often used in these types of test to remain cheap by
+    stopping expensive calls to databases or web requests by providing a pre-programmed response that the test can use instead. Due to their 
+    lower cost unit tests can be ran before every deployment.
 
-    \item \textbf{Integration Tests} - Unlike the aforementioned unit tests, integration tests want to test the actual functionality of the system, thus 
-    making them more costly. Or in other words \textit{'Integration tests verify that different modules or services used by your application work well
+    \item \textbf{Integration Tests} - Unlike unit tests, integration tests want to test the actual functionality of the system, thus 
+    making them more costly. In other words \textit{'Integration tests verify that different modules or services used by your application work well
     together'} [57]. These are run on a schedule rather than at deployment to help lower the overall expenditure of testing. 
   
     \item \textbf{End-to-end (E2E) Tests} - End-to-end tests, also known as UI tests, \textit{'replicates a user behavior with the software'} [57].
     This is done on software that is either live, or functions the exact same way the live system does. This is the most expensive type of testing as
     it often requires a large overhead to run. For example a library like Puppeteer [59] uses the chromium browser to make network requests to a 
-    specified test url and then replicates user actions and runs assertions based on those actions. This is a lot more CPU intensive work than the 
-    previous tests, and similar to integration tests should be run on a schedule. These types of tests are the smallest area of testing however due 
-    to their increased cost.
+    specified test url, then replicates user actions and runs assertions based on those actions. This is a lot more CPU intensive work than the 
+    previous tests, and like integration tests should be run on a schedule.
   \end{itemize}
 
-  \begin{table}[H]
-    \centering
-    \begin{tabular}{|l|l|l|}
-      \hline
-      \textbf{Test Name}    & \textbf{Test Type}  & \textbf{Cadence}  \\ \hline
-      UI tests              & E2E                 & Twice a week      \\ \hline
-      Booking tests         & Integration         & Daily             \\ \hline
-      Payments tests        & Integration         & Daily             \\ \hline     
-      Account tests         & Integration         & Daily             \\ \hline     
-      Car tests             & Integration         & Daily             \\ \hline   
-      P2P/Blockchain tests  & E2E                 & Weekly            \\ \hline 
-      Unit tests            & Unit                & On deployment     \\ \hline    
-    \end{tabular}
-    \caption{Table showing ACMEs tests and testing pattern}
-  \end{table}
-
-  The above table shows ACME's testing patterns. Most is quite self-explanatory, the only strange one is that P2P/Blockchain and UI tests are not on 
-  the same cadence. This was a decision made due to cost. Blockchains require a gas fee [60] when transacting on them. If this is done on a live 
-  environment this is going to cost money to pay that fee. Therefore I have lowered this testing suite down to once a week instead of twice.
+  A breakdown of ACMEs testing can be seen in \hyperref[sec:AppendixC]{\textbf{AppendixC}}.
 
   \subsection{Deployment}
   \label{sec:Deployment}
 
-  Deployment can be described as the \textit{'process of putting software and software solutions into use or action'} [61]. This stage can be
+  Deployment can be described as the \textit{'process of putting software and software solutions into use or action'} [60]. This stage can be
   used to run tests, build and of course deploy the final application. Below is the jenkins pipeline ACME uses to deploy their app.
 
   \begin{figure}[H]
