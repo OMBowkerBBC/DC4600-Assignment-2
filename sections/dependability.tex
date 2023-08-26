@@ -33,11 +33,10 @@
   \subsection{Fault tolerance}
   Other than third party issues there are security problems that could arise. The first thing to tackle is the code itself, the code should be written in 
   a memory safe language. Non-memory safe languages (such as C) allow programmers direct access to memory which can result in attacks such as buffer
-  overflows and use-after-free attacks [30]. I would recommend Python due its  vibrant community and an older study showed
+  overflows and use-after-free attacks [30]. I would recommend Python due its vibrant community and an older study showed
   that the total code written and time spent writing was the lowest out of a handful of other languages [31].
 
-  Ian Sommerville outlines 8 steps for dependable programming guidelines [28]. I will now go through each one and give examples of how ACMEs' system can 
-  handle issues in that area.
+  Ian Sommerville outlines 8 steps for dependable programming guidelines [28].
 
   \begin{enumerate}
     \label{sec:PoLP}
@@ -47,12 +46,12 @@
 
     However this can also be extended in a cloud-native architecture so that the individual components of the system only need permission to access what 
     they need to function. For example the payment lambda does not need access to the account lambda. This not only breaks PoLP, but also the idea of
-    microservices being self-contained operations. Steps and process should be in place and enforced to both staff and code to revoke permissions that are no
+    microservices being self-contained operations. Steps and processes should be in place to both staff and code to revoke permissions that are no
     longer needed.
 
     \item \textit{Check all inputs for validity} - This is vital for two reasons. The first is data integrity, you may have a schema that you want users
     data to conform to. This can make querying data easier, but also save money as you won't be having to pay for extra data storage. Additional checks such 
-    as size and range checks [28] should be done, and helpful error messages returned to the client so they know what to change.
+    as size and range checks [28] should be done, and helpful error messages returned to the client.
     
     However the main reason is security. In OWASPs' top 10 vulnerabilities list [33] \textit{'Injection'} is 3rd and covers both XSS (Cross Site Scripting) 
     and SQL injection attacks. These are nearly always exploited via unsanitised inputs. Both client and server-side checks must be made on any data
@@ -81,11 +80,9 @@
     Memory leaks are no longer an issue in modern languages, but errors can still occur. Some languages like JavaScript allow this access and return a default 
     value instead of erroring. However this still has to be checked, otherwise functions that don't exists could be called, ending in system failure/error.
 
-    \item \textit{Include timeouts when calling external components} - This is important as a faulty or even compromised external service could make
-    your own service unavailable when trying to retrieve data from it. If one user initiated a request to the external resource that took too long 
-    another user coming along in that time may not be able to access the service. In addition to this it's frustrating to the user to be sat 
-    around waiting when the data may never be returned. Most libraries allow developers to add timeouts to any network request made and this is 
-    implemented into the ACME system.
+    \item \textit{Include timeouts when calling external components} - Long waits are frustrating for users but can also lead to system errors. If another 
+    part of the ui/system is expecting data at a certain point this could lead to an error/fault in the system. Most libraries allow an option like this,
+    however wherever this is not the case ACME has implemented their own timeouts and fallbacks.
 
     \item \textit{Name all constants that represent real-world values} - This is a good practice and is sometime referred to as \textit{'magic numbers'} [36].
     This can be troublesome when these hard-coded values are used in multiple places. ACME uses config files for these values that can then be imported 
@@ -137,8 +134,7 @@
   the validity of individuals driving licenses [40], which will be used when the customer creates an account. Adding further security to this, drivers licenses
   must be checked when the customer picks up the car. If something isn't correct, the customer is refunded and the car is not rented to them.
 
-  Doing the above will help with safety concerns that could arise from ACME's system. There is always a chance something will happen that is out of 
-  ACMEs' control, however if the correct steps are taken these occurrences can be minimised.
+  The above actions help minimise the damage that can be done to ACMEs customer and products.
 
   \subsection{Security}
   I now will discuss security in two categories, physical (real-world) and software.
@@ -163,7 +159,7 @@
 
   \subsubsection{Software}
   I have spoke throughout this report about software security risks that can occur if developers are not careful. In this section I want to discuss
-  more about preventative measures that can be taken to avoid software issues from happening.
+  more about preventative measures that ACME takes to avoid software issues from happening.
 
   \begin{itemize}
     \item \textbf{Penetration testing} - This \textit{'is a cyberattack simulation launched on your computer system'} [44] most often carried out by a
@@ -187,8 +183,8 @@
     \textit{'anywhere between £600 to over £3000 per day'} [46].
 
     \item \textbf{Principle of least privilege (PoLP)} - As previously \hyperref[sec:PoLP]{\textbf{menitioned}} ACME will incorporate processes for 
-    both onboarding and off-boarding new staff members. No staff member should have any privileges they do not need to do their job. Although this can seem 
-    to be untrusting, however with 34\% of businesses suffering attacks from insiders [47] and 66\% of companies being more worried about an internal attack 
+    both onboarding and off-boarding new staff members. No staff member should have any privileges they do not need to do their job. This can seem 
+    untrusting, however with 34\% of businesses suffering attacks from insiders [47] and 66\% of companies being more worried about an internal attack 
     than a external attack [47] highlights the potential issue.
 
     \item \textbf{QA validation/testing} - The value of testing is discussed more in the \hyperref[sec:Testing]{\textbf{Testing}} section.
