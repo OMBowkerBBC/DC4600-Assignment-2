@@ -11,9 +11,9 @@
 
   \subsection{Overall Architecture}
   The architecture I have chosen is a Cloud-Native architecture. AWS, the largest cloud provider [2], describes this architecture as the 
-  \textit{'approach of building, deploying, and managing modern applications in cloud computing environments'} [3]. In simpler terms, developers can setup
-  \textit{'virtual'} servers that a third-party houses to run their software, they provide the infrastructure, you provide the code/instructions. 
-  These servers use virtualisation \textit{'allows the hardware elements of a single computer ... to be divided into multiple virtual computers'} [4]. 
+  \textit{'approach of building, deploying, and managing modern applications in cloud computing environments'} [3]. In simpler terms, these are 
+  servers for customers to use, but housed by AWS. These servers use virtualisation \textit{'allows the hardware elements of a single computer ... 
+  to be divided into multiple virtual computers'} [4]. 
 
   \begin{figure}[H]
     \centering
@@ -38,15 +38,14 @@
     \label{fig:microservices}
   \end{figure}
 
-  Customers will go to competitors if they deem your service to be unreliable or cannot access you're system. This is another area where cloud-native shines 
-  as they provide redundancy. AWS calls these AZs (Availability Zones) [8] these represent different data centers. So if one data center 
-  has an issue, your entire infrastructure can be \textit{'ported'} to another one automatically. Coupled with this is the fact the services offered by 
-  these cloud providers have been tested by millions of people, so are resilient, but also the cost to develop some of these solutions from scratch would be
-  extremely costly.
+  Customers will go to competitors if they deem your service to be unreliable or cannot access you're system. Redundancy is provided by what AWS calls 
+  AZs (Availability Zones) [8] these represent different data centers. So if one data center has an issue, your entire infrastructure can be \textit{'ported'} 
+  to another one automatically. Coupled with this is the fact the services offered by these cloud providers have been tested by millions of people, so are 
+  resilient, but also the cost to develop some of these solutions from scratch would be extremely costly.
 
   Using cloud-native providers also alleviates some of the responsibility. Google [9], AWS [10] and Azure [11] all have shared responsibility models where 
   they determine who oversees what. This gives a team less to worry about, as with certain packages operating systems, networking and even 
-  security patches can all be handled and managed by the cloud provider, dependant on what kind of service you are using.
+  security patches can all be handled and managed by the cloud provider.
 
   Finally a cloud-native approach is much more scalable and resilient. There are two ways to scale, vertically and horizontally.
   Vertically refers to adding more computing power, horizontally refers to adding extra machines [12].
@@ -75,11 +74,11 @@
     IaC (Infrastructure as Code) [15] being used in a lot of organisations, it's not just a service switch, it can be the rewriting of 1000s of lines
     of code. Research is vital here, making sure the organisation you go with has the things you need and is expanding is vital to not reach a situation where
     you can't build what you want. 
-    \item \textbf{Lack of control} - You can't control what stays and what gos on the providers platform. They could deprecate systems you were using leaving 
-    you with a lot of issues. This has happened in the past with certain version of software, for example node versions being deprecated [16]. The main
-    reason this happens however is because the software is no longer supported by the developers. This could lead to security issues in the future and it is 
-    therefore unsafe to use it. In addition to this, features are usually \textit{soft deprecated} which refer to \textit{'an API which should no longer be 
-    used to write new code, but it remains safe to continue using it in existing code'} [17].
+    \item \textbf{Lack of control} - They could deprecate systems you were using leaving  you with a lot of issues. This has happened in the past with 
+    certain version of software, for example node versions being deprecated [16]. The main reason this happens however is because the software is no 
+    longer supported by the developers. This could lead to security issues in the future and it is therefore unsafe to use it. In addition to this, features 
+    are usually \textit{soft deprecated} which refer to \textit{'an API which should no longer be used to write new code, but it remains safe to continue using 
+    it in existing code'} [17].
     \item \textbf{Knowledge} - Cloud development and IAC [15] requires knowledge of how they work and piece together. ACME can put their developers who create
     the site on courses to learn this or hire a specialist who knows all about it already. This is an additional cost/factor to think about. I 
     don't see this is an issue though, as with the on-prem alternative you also need someone to manage the physical hardware as well as the software 

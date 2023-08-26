@@ -33,8 +33,7 @@
   \subsection{Fault tolerance}
   Other than third party issues there are security problems that could arise. The first thing to tackle is the code itself, the code should be written in 
   a memory safe language. Non-memory safe languages (such as C) allow programmers direct access to memory which can result in attacks such as buffer
-  overflows and use-after-free attacks [30]. Such attacks can end in system failure and sometimes allow a hacker to infiltrate the system. For this 
-  reason I would suggest ACME use a language like Python. Not only is it memory safe, but it's got a vibrant community and an older study showed
+  overflows and use-after-free attacks [30]. I would recommend Python due its  vibrant community and an older study showed
   that the total code written and time spent writing was the lowest out of a handful of other languages [31].
 
   Ian Sommerville outlines 8 steps for dependable programming guidelines [28]. I will now go through each one and give examples of how ACMEs' system can 
@@ -124,7 +123,6 @@
 
   Despite this there are situations in which these two can cross over fully. A german hospital was hacked and a woman ended up dying due the hack forcing her 
   to be transported to another hospital. This was deemed \textit{'the first known case of a life being lost as a result of a hack'} [39].
-  In the rest of this section I will discuss how ACMEs' system protects/avoids the two above issues.
 
   \subsection{Safety}
   Safety of a system can often times be linked to harming other peoples health. The system ACME has created can't directly do that, however could have 

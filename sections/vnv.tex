@@ -10,7 +10,6 @@
     \textit{'The aim of verification is to check that the software meets its stated functional and non-functional requirements'} [53]
   \end{quote}
 
-
   \subsection{Customer Feedback}
   To validate the product has met customer expectations, I think it's important to first note that the old system of phoning/emailing is still in 
   place for customers who don't want to transition to the new system. Systems on the web front-end could be put into place in the future to help 
@@ -58,18 +57,8 @@
   \label{sec:Deployment}
 
   Deployment can be described as the \textit{'process of putting software and software solutions into use or action'} [59]. This stage can be
-  used to run tests, build and of course deploy the final application. Below is the jenkins pipeline ACME uses to deploy their app.
-
-  \begin{figure}[H]
-    \centering
-    \includegraphics[width=12cm]{assets/relasePipeline.drawio.png}
-    \caption{Diagram showing the stages of release for project.}
-    \label{fig:releasePipeline}
-  \end{figure}
-
-  If at any point one of the stages fails, the pipeline fails and the following stages are not executed. This is helpful as if the unit tests fail this would
-  indicate an issue and therefore we wouldn't want the broken system to be deployed to live. I have also set it up in a way where there are two environments.
-  First the new code is deployed to test, where it can be double checked and made sure that it is ready by testers. Then, with manual approval, it can be 
-  deployed to the live environment. The idea here is having this separation of environments will help catch bugs on the real hardware before going to live.
+  used to run tests, build and of course deploy the final application. If at any point one of the stages fails, the pipeline fails and the following 
+  stages are not executed. This is helpful as if the unit tests fail this wouldindicate an issue and therefore we wouldn't want the broken system to 
+  be deployed to live. In \hyperref[sec:AppendixE]{\textbf{AppendixE}} I illustrate how ACMEs deployment phases look like.
 
 \newpage

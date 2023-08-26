@@ -94,3 +94,19 @@
   The above table shows ACME's testing patterns. Most is quite self-explanatory, the only strange one is that P2P/Blockchain and UI tests are not on 
   the same cadence. This was a decision made due to cost. Blockchains require a gas fee [65] when transacting on them. If this is done on a live 
   environment this is going to cost money to pay that fee. Therefore I have lowered this testing suite down to once a week instead of twice.
+
+\subsection{Appendix E - ACMEs deployment pipeline}
+\label{sec:AppendixE}
+
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=12cm]{assets/relasePipeline.drawio.png}
+    \caption{Diagram showing the stages of release for project.}
+    \label{fig:releasePipeline}
+  \end{figure}
+
+  ACME has its deployment set up in a way where there are two environments, so that new features can be tested in the real world before being pushed to customers.
+  First the new code is deployed to test, where it can be double checked and made sure that it is ready by testers. Then, with manual approval, it can be 
+  deployed to the live environment. The idea here is having this separation of environments will help catch bugs on the real hardware before going to live.
+  There is extra cost to this, however the test environment uses much smaller and cheaper memory and services and is there to check integration between 
+  components.
