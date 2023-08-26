@@ -107,34 +107,23 @@
   \label{sec:Rollbacks}
   AWS uses metrics to track events, these can be both default and custom metrics defined in code. These metrics can then be hooked up to alarms which 
   when state changes can trigger events that are handled by the EventBridge currently in the architecture [37]. These events can then be used to trigger
-  additional actions such as code rollbacks or additional checks to determine/fix issues.
-
-  Rollbacks could be made possible by using Jenkins [38], which is a CI/CD provider. This kind of action should only be taken on components that render the
-  service unusable. This automation of rolling back could have other consequences to other systems and therefore should be a last resort and very well 
-  tested. For example if a microservice failed, it might not be worth having this automatic process. However if the web front end encountered system failure 
-  it'd be worth auto restarting, especially when there is no staff currently working to investigate the problems themselves.
-  
-  \begin{figure}[H]
-    \centering
-    \includegraphics[width=10cm]{assets/rollbackPipeline.drawio.png}
-    \caption{Diagram showing how the CI/CD pipeline of a rollback system would operate.}
-    \label{fig:rollbackPipeline}
-  \end{figure}
+  additional actions such as code rollbacks or additional checks to determine/fix issues. ACME has a rollback procedure in place that is described and
+  illustrated in \hyperref[sec:AppendixC]{\textbf{AppendixC}}.
   
   \subsection{Difference between safety and security threats}
 
   Safety and security are not the same things when it comes to software, a definition for safety is a:
   \begin{quote}
-    \textit{'should never damage people or environment even though the system fails'} [39]
+    \textit{'should never damage people or environment even though the system fails'}[38]
   \end{quote}
 
   Whereas security can described as:
   \begin{quote}
-    \textit{'a system attribute that reflects the ability of the system to protect itself from external attacks, which may be accidental or deliberate.'} [39]
+    \textit{'a system attribute that reflects the ability of the system to protect itself from external attacks, which may be accidental or deliberate.'} [38]
   \end{quote}
 
   Despite this there are situations in which these two can cross over fully. A german hospital was hacked and a woman ended up dying due the hack forcing her 
-  to be transported to another hospital. This was deemed \textit{'the first known case of a life being lost as a result of a hack'} [40].
+  to be transported to another hospital. This was deemed \textit{'the first known case of a life being lost as a result of a hack'} [39].
   In the rest of this section I will discuss how ACMEs' system protects/avoids the two above issues.
 
   \subsection{Safety}
@@ -147,7 +136,7 @@
   still happened, therefore ACME offers email and phone channels where customers can communicate with staff to get refunded.
 
   To verify drivers are who they say they are ACME has multiple checks before keys are given to a customer. The UK government offers a service to check 
-  the validity of individuals driving licenses [41], which will be used when the customer creates an account. Adding further security to this, drivers licenses
+  the validity of individuals driving licenses [40], which will be used when the customer creates an account. Adding further security to this, drivers licenses
   must be checked when the customer picks up the car. If something isn't correct, the customer is refunded and the car is not rented to them.
 
   Doing the above will help with safety concerns that could arise from ACME's system. There is always a chance something will happen that is out of 
@@ -162,14 +151,14 @@
   user data is not accessible through ACME. However there are still some threats worth discussing.
 
   \begin{itemize}
-    \item \textit{Tailgating} - This is a method where an \textit{'unauthorized person gains physical access to an off-limits location'} [42]. This can 
+    \item \textit{Tailgating} - This is a method where an \textit{'unauthorized person gains physical access to an off-limits location'} [41]. This can 
     lead this individual gaining access to machines or information they shouldn't have access to. Staff training is required here as well as tight security
     policies around passes. Gates should only allow one person through at a time and staff should report any suspicious behaviour.
 
     \item \textit{Physical access to machines} - This can be garnered by the above method or other methods of social engineering/distraction. This shouldn't
     be too hard to prevent, if devices like PCs are locked when the user is not there. In addition, ACME will have a password policy that makes sure that 
     passwords are changed every 3 months as well meet certain criteria, such as length and special characters contained. I don't recommend a password manager 
-    despite their ease of use as this represents a single point of failure [43]. Tools like haveibeenpwned [44] can also be used to determine whether someones 
+    despite their ease of use as this represents a single point of failure [42]. Tools like haveibeenpwned [43] can also be used to determine whether someones 
     email has been in a recent security breach.
   
   \end{itemize}
@@ -179,8 +168,8 @@
   more about preventative measures that can be taken to avoid software issues from happening.
 
   \begin{itemize}
-    \item \textbf{Penetration testing} - This \textit{'is a cyberattack simulation launched on your computer system'} [45] most often carried out by a
-    third party. There are 3 different approaches to this, black, grey and white box [46].
+    \item \textbf{Penetration testing} - This \textit{'is a cyberattack simulation launched on your computer system'} [44] most often carried out by a
+    third party. There are 3 different approaches to this, black, grey and white box [45].
 
     \begin{table}[H]
       \centering
@@ -197,24 +186,24 @@
     I would recommend a mixture of black and white box pen testing. Black box simulates an attacked on the outside trying to gain access to the system.
     Whilst a white box test gives the pen tester the chance to view the inner workings of the code. This could flag any potential vulnerabilities that 
     made it through the QA/testing phase. This should be done once a year, as these services can cost 
-    \textit{'anywhere between £600 to over £3000 per day'} [47].
+    \textit{'anywhere between £600 to over £3000 per day'} [46].
 
     \item \textbf{Principle of least privilege (PoLP)} - As previously \hyperref[sec:PoLP]{\textbf{menitioned}} ACME will incorporate processes for 
     both onboarding and off-boarding new staff members. No staff member should have any privileges they do not need to do their job. Although this can seem 
-    to be untrusting, however with 34\% of businesses suffering attacks from insiders [48] and 66\% of companies being more worried about an internal attack 
-    than a external attack [48] highlights the potential issue.
+    to be untrusting, however with 34\% of businesses suffering attacks from insiders [47] and 66\% of companies being more worried about an internal attack 
+    than a external attack [47] highlights the potential issue.
 
     \item \textbf{QA validation/testing} - The value of testing is discussed more in the \hyperref[sec:Testing]{\textbf{Testing}} section.
     
-    \item \textbf{Code reviews} - Code reviews act as a \textit{'second opinion'} [49] on newly implemented code. Another developer should always read any 
+    \item \textbf{Code reviews} - Code reviews act as a \textit{'second opinion'} [48] on newly implemented code. Another developer should always read any 
     code that plans to be released to a live environment to help stop bugs reaching consumers.
 
     \item \textbf{Strict dependency selection} - ACME should use only well-known and tested external dependencies. In addition to this these should be checked
-    into code so other developers can review them before live release. There have been multiple instances [50] where packages have been 
-    \textit{'typo-squatted'} [51] and made their way to consumers.
+    into code so other developers can review them before live release. There have been multiple instances [49] where packages have been 
+    \textit{'typo-squatted'} [50] and made their way to consumers.
     
-    \item \textbf{Firewalls/blacklists} - AWS offers services such as WAF [52] to help protect customers against some forms of attacks. An extra layer can be 
-    added to this. Software can be written to determine malicious or concerning usage of the web app, such as excessive requests (DDos) attack3[53]. 
+    \item \textbf{Firewalls/blacklists} - AWS offers services such as WAF [51] to help protect customers against some forms of attacks. An extra layer can be 
+    added to this. Software can be written to determine malicious or concerning usage of the web app, such as excessive requests (DDos) attack3[52]. 
     These can then be put onto a blacklist and their requests can be dropped from then on.
   \end{itemize}
 

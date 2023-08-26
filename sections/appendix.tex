@@ -52,13 +52,28 @@
   \end{figure}
 
   The main component is the Server-side Rendered front end. This can then communicate with the blockchain for crypto transactions using a wallet provider,
-  e.g. Metamask [61]. The main functionality is that the front end is then able to send events through EventBridge [62] to individual lambdas [63] for different 
-  functionality. These lambdas can then store data into the database. The payment lambda uses Stripe [64] to process payments, and the \textit{'car lambda'} is
+  e.g. Metamask [60]. The main functionality is that the front end is then able to send events through EventBridge [61] to individual lambdas [62] for different 
+  functionality. These lambdas can then store data into the database. The payment lambda uses Stripe [63] to process payments, and the \textit{'car lambda'} is
   for internal use only, hence the lock on its connection. These topics will be discussed more in the 
   \hyperref[sec:Dependability]{\textbf{Dependability}} section.
 
-\subsection{Appendix C - ACMEs testing strategy}
+\subsection{Appendix C - ACMEs rollback strategy}
 \label{sec:AppendixC}
+
+  Rollbacks could be made possible by using Jenkins [64], which is a CI/CD provider. This kind of action should only be taken on components that render the
+  service unusable. This automation of rolling back could have other consequences to other systems and therefore should be a last resort and very well 
+  tested. For example if a microservice failed, it might not be worth having this automatic process. However if the web front end encountered system failure 
+  it'd be worth auto restarting, especially when there is no staff currently working to investigate the problems themselves.
+  
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=10cm]{assets/rollbackPipeline.drawio.png}
+    \caption{Diagram showing how the CI/CD pipeline of a rollback system would operate.}
+    \label{fig:rollbackPipeline}
+  \end{figure}
+
+\subsection{Appendix D - ACMEs testing strategy}
+\label{sec:AppendixD}
 
   \begin{table}[H]
     \centering
